@@ -2,9 +2,10 @@ import express from 'express';
 import morgan from 'morgan';
 import { json, urlencoded } from 'body-parser';
 import cors from 'cors';
-import { signin, signup } from './utils/auth';
+import { protect, signin, signup } from './utils/auth';
 import indexRouter from './routes/index';
 import userRouter from './routes/user.router';
+import itemRouter from './routes/item.router';
 
 const app = express();
 
@@ -18,8 +19,10 @@ app.use(morgan('dev'));
 app.post('/signin', signin);
 app.post('/signup', signup);
 
-app.use('/', indexRouter);
-app.use('/user', userRouter);
+app.use('/api', protect);
+app.use('/api/', indexRouter);
+app.use('/api/user', userRouter);
+app.use('/api/items', itemRouter);
 
 // connect to MongoDB
 // connect to MongoDB
@@ -32,6 +35,7 @@ mongoose.connect(URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 });
 
 // end of MongoDB
