@@ -1,15 +1,22 @@
-import logger from 'morgan';
 import express from 'express';
-import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import { json, urlencoded } from 'body-parser';
+import cors from 'cors';
+import { signin, signup } from './utils/auth';
 import indexRouter from './routes/index';
 import userRouter from './routes/user.router';
 
 const app = express();
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.disable('x-powered-by');
+
+app.use(cors());
+app.use(json());
+app.use(urlencoded({ extended: true }));
+app.use(morgan('dev'));
+
+app.post('/signin', signin);
+app.post('/signup', signup);
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
