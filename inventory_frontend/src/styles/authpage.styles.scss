@@ -1,0 +1,84 @@
+@import 'main.scss';
+
+.form-container-root {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  padding-top: 56px;
+  max-width: 1080px;
+  height: 100%;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.form-container {
+  width: 540px;
+  min-width: 540px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-logo-container {
+  padding-bottom: 40px;
+  padding-left: 20px;
+}
+
+.formBox {
+  box-shadow: 0 15px 35px 0 rgba(60, 66, 87, 0.08),
+    0 5px 15px 0 rgba(0, 0, 0, 0.12);
+  padding: 56px 68px;
+  border-radius: 4px;
+}
+
+.form-header {
+  margin-top: 20px;
+}
+
+.base-form {
+  margin-top: 20px 20px 0 20px;
+}
+
+form {
+  display: block;
+  margin: 0;
+  padding: 0;
+  .form-label {
+    margin-bottom: 5px;
+    label {
+      line-height: 20px;
+      font-weight: 500;
+      font-size: 14px;
+      color: $primary-font-color;
+    }
+  }
+  input {
+    position: relative;
+    box-sizing: border-box;
+    text-align: left;
+    color: $primary-font-color;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    padding: 8px 16px;
+    margin-bottom: 30px;
+    border-radius: 4px;
+    outline: 0;
+    border: 1px solid #c9c9c9;
+    min-width: 100%;
+    letter-spacing: 0.02rem;
+  }
+  button {
+    display: block;
+    width: 100%;
+    background-color: $primary-color;
+    outline: 0;
+    border: 0;
+    line-height: 28px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 8px 0;
+    cursor: pointer;
+    letter-spacing: 0.02rem;
+  }
+}
