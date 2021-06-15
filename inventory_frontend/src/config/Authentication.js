@@ -8,12 +8,13 @@ export const signup = async (name, email, password) => {
     },
     body: JSON.stringify({ name, email, password }),
   });
-  if (fetchReq.status === 500) {
+  const response = await fetchReq.json();
+  if (response.message) {
     console.log('Invalid Credentials');
     return null;
   } else {
-    const response = await fetchReq.json();
     localStorage.setItem('currentUser', response.token);
+    return response.token;
   }
 };
 
@@ -25,12 +26,13 @@ export const signin = async (email, password) => {
     },
     body: JSON.stringify({ email, password }),
   });
-  if (fetchReq.status === 500) {
+  const response = await fetchReq.json();
+  if (response.message) {
     console.log('Invalid Credentials');
     return null;
   } else {
-    const response = await fetchReq.json();
     localStorage.setItem('currentUser', response.token);
+    return response.token;
   }
 };
 

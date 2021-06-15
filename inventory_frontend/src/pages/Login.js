@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { signup } from '../config/Authentication';
+import { signin } from '../config/Authentication';
 import '../styles/authpage.styles.scss';
 
-const Signup = (props) => {
-  const [name, setName] = useState('');
+const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const register = () => {
-    const register = signup(name, email, password);
-    if (register) {
+  const login = async () => {
+    const loginUser = await signin(email, password);
+    if (loginUser) {
       props.history.push('/dashboard');
     }
   };
@@ -20,24 +19,15 @@ const Signup = (props) => {
         <div className="form-logo-container">Logo</div>
         <div className="formBox">
           <div className="form-header">
-            <h2>Create your account</h2>
+            <h2>Sign in to your account</h2>
           </div>
           <div className="base-form">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                register();
+                login();
               }}
             >
-              <div className="form-label">
-                <label htmlFor="Name">Name</label>
-              </div>
-              <input
-                required
-                value={name}
-                placeholder="John Doe"
-                onChange={(e) => setName(e.target.value)}
-              />
               <div className="form-label">
                 <label htmlFor="email">Email</label>
               </div>
@@ -52,13 +42,14 @@ const Signup = (props) => {
                 <label htmlFor="Password">Password</label>
               </div>
               <input
+                id="invalid"
                 required
                 type="password"
                 value={password}
                 placeholder="********"
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button>Create Account</button>
+              <button>Continue</button>
             </form>
           </div>
         </div>
@@ -67,4 +58,4 @@ const Signup = (props) => {
   );
 };
 
-export default Signup;
+export default Login;
