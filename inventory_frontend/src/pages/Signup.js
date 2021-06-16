@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { signup } from '../config/Authentication';
+import { Link } from 'react-router-dom';
 import '../styles/authpage.styles.scss';
 
 const Signup = (props) => {
@@ -61,6 +62,10 @@ const Signup = (props) => {
               <button>Create Account</button>
             </form>
           </div>
+        </div>
+        <div className="next-auth-conatiner">
+          <span>Already a user?{'  '}</span>
+          <Link to="/login">Sign In</Link>
         </div>
       </div>
     </div>

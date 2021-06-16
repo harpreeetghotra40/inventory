@@ -1,17 +1,15 @@
 import React from 'react';
+import Navbar from './Navbar';
+import Inventory from './Inventory';
+import '../styles/dashboard.styles.scss';
 
 const Dashboard = (props) => {
   return (
     <div>
-      Dashboard
-      <button
-        onClick={() => {
-          localStorage.clear();
-          props.history.push('/login');
-        }}
-      >
-        Logout
-      </button>
+      <Navbar />
+      <div style={{ marginLeft: '250px', marginRight: '10px' }}>
+        <Inventory />
+      </div>
     </div>
   );
 };
