@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/inventory.styles.scss';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -19,10 +20,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import AddIcon from '@material-ui/icons/Add';
+import AddItem from './AddItem';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+function createData(name, supplier, inStock, warning, price) {
+  return { name, supplier, inStock, warning, price };
 }
 
 const rows = [
@@ -31,11 +33,6 @@ const rows = [
   createData('Eclair', 262, 16.0, 24, 6.0),
   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
   createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Honeycomb', 408, 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0),
-  createData('KitKat', 518, 26.0, 65, 7.0),
-  createData('Lollipop', 392, 0.2, 98, 0.0),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -64,16 +61,26 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
+const showModal = () => {
+  document.querySelector('#inventory-modal').style.visibility = 'visible';
+  document.querySelector('#add-item-btn').style.transform = 'rotate(45deg)';
+};
+
+const hideModal = () => {
+  document.querySelector('#inventory-modal').style.visibility = 'hidden';
+  document.querySelector('#add-item-btn').style.transform = 'rotate(-45deg)';
+};
+
 const headCells = [
   {
     id: 'name',
     numeric: false,
     disablePadding: true,
-    label: 'Item',
+    label: 'Name',
   },
   { id: 'supplier', numeric: true, disablePadding: false, label: 'Supplier' },
   { id: 'inStock', numeric: true, disablePadding: false, label: 'In Stock' },
-  { id: 'warning', numeric: true, disablePadding: false, label: 'Warning At' },
+  { id: 'warning', numeric: true, disablePadding: false, label: 'Warning' },
   { id: 'price', numeric: true, disablePadding: false, label: 'Price' },
 ];
 
@@ -146,8 +153,8 @@ const useToolbarStyles = makeStyles((theme) => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+          color: theme.palette.success.main,
+          backgroundColor: lighten(theme.palette.success.light, 0.85),
         }
       : {
           color: theme.palette.text.primary,
@@ -195,9 +202,9 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
+        <Tooltip title="Add Item" onClick={() => showModal()}>
+          <IconButton aria-label="Add Item">
+            <AddIcon id="add-item-btn" />
           </IconButton>
         </Tooltip>
       )}
@@ -221,7 +228,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 750,
   },
   visuallyHidden: {
-    border: 1,
+    border: 0,
     clip: 'rect(0 0 0 0)',
     height: 1,
     margin: -1,
@@ -236,7 +243,7 @@ const useStyles = makeStyles((theme) => ({
 const Inventory = () => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('supplier');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -299,6 +306,7 @@ const Inventory = () => {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
+        <AddItem hideModal={hideModal} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -346,10 +354,10 @@ const Inventory = () => {
                       >
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.supplier}</TableCell>
+                      <TableCell align="right">{row.inStock}</TableCell>
+                      <TableCell align="right">{row.warning}</TableCell>
+                      <TableCell align="right">{row.price}</TableCell>
                     </TableRow>
                   );
                 })}

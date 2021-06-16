@@ -7,7 +7,7 @@ const Dashboard = (props) => {
   return (
     <div>
       <Navbar />
-      <div style={{ marginLeft: '250px', marginRight: '10px' }}>
+      <div style={{ margin: '10px 10px 10px 250px' }}>
         <Inventory />
       </div>
     </div>

@@ -95,6 +95,7 @@ const Navbar = ({ history }) => {
                 localStorage.clear();
                 history.push('/login');
               }}
+              id="logout-btn"
             >
               <ListItemIcon>
                 <ExitToAppIcon />

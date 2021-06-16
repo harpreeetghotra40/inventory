@@ -1,0 +1,51 @@
+@import 'main.scss';
+
+.item-modal-container {
+  visibility: hidden;
+  position: fixed;
+  right: 0%;
+  top: 50%;
+  transform: translate(-15%, -83%);
+  background-color: white;
+  max-width: 540px;
+  z-index: 1000;
+  overflow: hidden;
+  border: 1px solid #c9c9c9;
+  border-radius: 4px;
+
+  input {
+    margin-bottom: 20px !important;
+  }
+  button {
+    margin-top: 10px;
+    width: 45%;
+    display: inline;
+  }
+}
+#cancel-btn {
+  margin-right: 10%;
+  background-color: #ff7961 !important;
+}
+.item-container {
+  padding: 20px 35px;
+}
+
+.new-product-header {
+  padding: 15px 35px 15px;
+}
+.label-box {
+  margin: 5px 0;
+}
+label {
+  line-height: 20px;
+  font-weight: 500;
+  font-size: 14px;
+  color: $primary-font-color;
+}
+
+.input-45 {
+  div {
+    display: inline-block;
+    width: 45%;
+  }
+}
