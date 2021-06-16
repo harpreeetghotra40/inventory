@@ -36,9 +36,6 @@ const rows = [
   createData('Jelly Bean', 375, 0.0, 94, 0.0),
   createData('KitKat', 518, 26.0, 65, 7.0),
   createData('Lollipop', 392, 0.2, 98, 0.0),
-  createData('Marshmallow', 318, 0, 81, 2.0),
-  createData('Nougat', 360, 19.0, 9, 37.0),
-  createData('Oreo', 437, 18.0, 63, 4.0),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -72,12 +69,12 @@ const headCells = [
     id: 'name',
     numeric: false,
     disablePadding: true,
-    label: 'Dessert (100g serving)',
+    label: 'Item',
   },
-  { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-  { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-  { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+  { id: 'supplier', numeric: true, disablePadding: false, label: 'Supplier' },
+  { id: 'inStock', numeric: true, disablePadding: false, label: 'In Stock' },
+  { id: 'warning', numeric: true, disablePadding: false, label: 'Warning At' },
+  { id: 'price', numeric: true, disablePadding: false, label: 'Price' },
 ];
 
 function EnhancedTableHead(props) {
@@ -187,7 +184,7 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Nutrition
+          Inventory
         </Typography>
       )}
 
@@ -224,7 +221,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 750,
   },
   visuallyHidden: {
-    border: 0,
+    border: 1,
     clip: 'rect(0 0 0 0)',
     height: 1,
     margin: -1,
@@ -243,7 +240,7 @@ const Inventory = () => {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
