@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Divider, Typography } from '@material-ui/core';
+import { addItemToInventory } from '../config/inventoryUtil';
 
 const AddItem = ({ hideModal }) => {
   const [name, setName] = useState('');
@@ -7,6 +8,9 @@ const AddItem = ({ hideModal }) => {
   const [stock, setStock] = useState(0);
   const [warning, setWarning] = useState(0);
   const [price, setPrice] = useState(0.0);
+  const onSubmitHandler = (e) => {
+    addItemToInventory(name, supplier, stock, warning, price);
+  };
   return (
     <div className="item-modal-container" id="inventory-modal">
       <div className="new-product-header">
@@ -14,7 +18,14 @@ const AddItem = ({ hideModal }) => {
       </div>
       <Divider />
       <div className="item-container">
-        <form className="add-item-form">
+        <form
+          id="add-item-form"
+          className="add-item-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSubmitHandler();
+          }}
+        >
           <div className="label-box">
             <label htmlFor="Name">Item Name*</label>
           </div>
@@ -71,6 +82,11 @@ const AddItem = ({ hideModal }) => {
             id="cancel-btn"
             onClick={(e) => {
               e.preventDefault();
+              setName('');
+              setSupplier('');
+              setPrice(0);
+              setWarning(0);
+              setStock(0);
               hideModal();
             }}
           >

@@ -1,4 +1,6 @@
 import React from 'react';
+import Inventory from './Inventory';
+import Suppliers from './Suppliers';
 import { withRouter } from 'react-router';
 import { Drawer } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,7 +15,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 
-const Navbar = ({ history }) => {
+const Navbar = ({ history, setActivePage }) => {
   const drawerWidth = 240;
 
   const useStyles = makeStyles((theme) => ({
@@ -53,7 +55,11 @@ const Navbar = ({ history }) => {
       <div className="navbar-list-container">
         <div className="list-container">
           <List>
-            <ListItem button key="Inventory">
+            <ListItem
+              button
+              key="Inventory"
+              onClick={() => setActivePage(<Inventory />)}
+            >
               <ListItemIcon>
                 <AppsIcon />
               </ListItemIcon>
@@ -61,7 +67,11 @@ const Navbar = ({ history }) => {
             </ListItem>
           </List>
           <List>
-            <ListItem button key="Suppliers">
+            <ListItem
+              button
+              key="Suppliers"
+              onClick={() => setActivePage(<Suppliers />)}
+            >
               <ListItemIcon>
                 <LocalShippingIcon />
               </ListItemIcon>
@@ -69,7 +79,7 @@ const Navbar = ({ history }) => {
             </ListItem>
           </List>
           <List>
-            <ListItem button key="Menu">
+            <ListItem button key="Menu" onClick={() => setActivePage(3)}>
               <ListItemIcon>
                 <RestaurantMenuIcon />
               </ListItemIcon>
@@ -81,7 +91,10 @@ const Navbar = ({ history }) => {
               <ListItemIcon>
                 <AssessmentIcon />
               </ListItemIcon>
-              <ListItemText primary="Reports" />
+              <ListItemText
+                primary="Reports"
+                onClick={() => setActivePage(4)}
+              />
             </ListItem>
           </List>
         </div>

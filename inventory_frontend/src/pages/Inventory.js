@@ -63,12 +63,10 @@ function stableSort(array, comparator) {
 
 const showModal = () => {
   document.querySelector('#inventory-modal').style.visibility = 'visible';
-  document.querySelector('#add-item-btn').style.transform = 'rotate(45deg)';
 };
 
 const hideModal = () => {
   document.querySelector('#inventory-modal').style.visibility = 'hidden';
-  document.querySelector('#add-item-btn').style.transform = 'rotate(-45deg)';
 };
 
 const headCells = [

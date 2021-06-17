@@ -11,6 +11,7 @@ export const addItem = async (req, res) => {
     const item = await Item.create({
       userRef: req.user._id,
       name: req.body.name,
+      supplierRef: req.body.supplierRef ?? '',
       quantity: req.body.quantity ?? 0,
       price: req.body.price ?? 0,
       warning: req.body.warning ?? 0,
