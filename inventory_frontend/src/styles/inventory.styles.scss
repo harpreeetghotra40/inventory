@@ -7,7 +7,7 @@
   top: 30%;
   transform: translate(-50%, -50%);
   background-color: white;
-  max-width: 540px;
+  width: 540px;
   z-index: 1000;
   overflow: hidden;
   border: 1px solid #c9c9c9;
@@ -23,8 +23,19 @@
   }
 }
 #cancel-btn {
+  margin-top: 10px;
+  width: 45%;
+  display: inline-block;
+  line-height: 28px;
   margin-right: 10%;
-  background-color: #ff7961 !important;
+  background-color: #3c4257 !important;
+  padding: 8px 0;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+  text-align: center;
 }
 .item-container {
   padding: 20px 35px;

@@ -6,6 +6,7 @@ import { protect, signin, signup } from './utils/auth';
 import indexRouter from './routes/index';
 import userRouter from './routes/user.router';
 import itemRouter from './routes/item.router';
+import supplierRouter from './routes/supplier.router';
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/api', protect);
 app.use('/api/', indexRouter);
 app.use('/api/user', userRouter);
 app.use('/api/items', itemRouter);
+app.use('/api/suppliers', supplierRouter);
 
 // connect to MongoDB
 // connect to MongoDB

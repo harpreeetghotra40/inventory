@@ -1,18 +1,17 @@
-import { reduceRight } from 'lodash';
 import { Item } from '../models/item.model';
 
 // create item
 export const addItem = async (req, res) => {
+  console.log(req.body);
   if (!req.body.name) {
     return res.status(400).send({ message: 'Name of item required' });
   }
-  console.log(req.user);
   try {
     const item = await Item.create({
       userRef: req.user._id,
       name: req.body.name,
       supplierRef: req.body.supplierRef ?? '',
-      quantity: req.body.quantity ?? 0,
+      quantity: req.body.stock ?? 0,
       price: req.body.price ?? 0,
       warning: req.body.warning ?? 0,
     });

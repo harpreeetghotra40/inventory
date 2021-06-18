@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import '../styles/inventory.styles.scss';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -22,18 +22,10 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import AddItem from './AddItem';
+import { getAllItems } from '../config/inventory.util';
+import { getAllSuppliers } from '../config/supplier.util';
 
-function createData(name, supplier, inStock, warning, price) {
-  return { name, supplier, inStock, warning, price };
-}
-
-const rows = [
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+const rows = [];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -299,6 +291,42 @@ const Inventory = () => {
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const [items, setItems] = useState([]);
+
+  const getItems = useCallback(async () => {
+    let response = await getAllItems();
+    setItems(response);
+  }, []);
+
+  function createData(name, supplier, inStock, warning, price) {
+    return { name, supplier, inStock, warning, price };
+  }
+
+  function createRows() {
+    items.map((item) => {
+      rows.push(
+        createData(
+          item.name,
+          item.supplierRef,
+          item.stock,
+          item.price,
+          item.warning
+        )
+      );
+    });
+  }
+
+  // const rows = [
+  // createData('Cupcake', 305, 3.7, 67, 4.3),
+  // createData('Donut', 452, 25.0, 51, 4.9),
+  // createData('Eclair', 262, 16.0, 24, 6.0),
+  // createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  // createData('Gingerbread', 356, 16.0, 49, 3.9),
+  // ];
+  useEffect(() => {
+    getItems();
+    createRows();
+  }, [getItems]);
 
   return (
     <div className={classes.root}>

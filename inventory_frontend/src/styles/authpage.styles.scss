@@ -67,7 +67,8 @@ form {
     display: none;
   }
 
-  input {
+  input,
+  select {
     position: relative;
     box-sizing: border-box;
     text-align: left;
@@ -86,12 +87,13 @@ form {
   button {
     display: block;
     width: 100%;
-    background-color: $primary-color;
+    background-color: #2196f3;
+    color: white;
     outline: 0;
     border: 0;
     line-height: 28px;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 700;
     border-radius: 4px;
     padding: 8px 0;
     cursor: pointer;

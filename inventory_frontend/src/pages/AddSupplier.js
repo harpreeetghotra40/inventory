@@ -1,12 +1,29 @@
 import React, { useState } from 'react';
 import { Divider, Typography } from '@material-ui/core';
-import { addItemToInventory } from '../config/inventoryUtil';
+import { addSupplier } from '../config/supplier.util';
 
-const AddSupplier = ({ hideModal }) => {
+const AddSupplier = ({ hideModal, fetchSuppliersFromAPI }) => {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState();
-  const onSubmitHandler = (e) => {
-    // addItemToInventory(name, supplier, stock, warning, price);
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
+  const [budget, setBudget] = useState();
+  const [balance, setBalance] = useState();
+
+  const resetToInitialState = () => {
+    setName('');
+    setAddress('');
+    setPhone('');
+    setBudget('');
+    setBalance('');
+  };
+
+  const onSubmitHandler = async (e) => {
+    const supplier = await addSupplier(name, address, phone, budget, balance);
+    if (supplier) {
+      fetchSuppliersFromAPI();
+      resetToInitialState();
+      hideModal();
+    }
   };
   return (
     <div className="item-modal-container" id="supplier-modal">
@@ -28,29 +45,61 @@ const AddSupplier = ({ hideModal }) => {
           </div>
           <input
             value={name}
-            placeholder="Item name"
+            placeholder="Supplier name"
             onChange={(e) => setName(e.target.value)}
+          />
+          <div className="label-box">
+            <label htmlFor="Address">Address</label>
+          </div>
+          <input
+            value={address}
+            placeholder="Address"
+            onChange={(e) => setAddress(e.target.value)}
           />
           <div className="label-box">
             <label htmlFor="Phone Number">Phone Number</label>
           </div>
           <input
-            type="phone"
+            type="tel"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
             value={phone}
-            placeholder="Phone Number"
+            placeholder="123-456-7890"
             onChange={(e) => setPhone(e.target.value)}
           />
-          <button
+          <div className="input-45">
+            <div style={{ paddingRight: '10%' }}>
+              <div className="label-box">
+                <label htmlFor="Budget">Budget</label>
+              </div>
+              <input
+                type="number"
+                value={budget}
+                placeholder="Budget"
+                onChange={(e) => setBudget(e.target.value)}
+              />
+            </div>
+            <div>
+              <div className="label-box">
+                <label htmlFor="Balance">Balance</label>
+              </div>
+              <input
+                type="number"
+                value={balance}
+                placeholder="0"
+                onChange={(e) => setBalance(e.target.value)}
+              />
+            </div>
+          </div>
+          <div
             id="cancel-btn"
             onClick={(e) => {
               e.preventDefault();
-              setName('');
-              setPhone();
+              resetToInitialState();
               hideModal();
             }}
           >
             Cancel
-          </button>
+          </div>
           <button>Save</button>
         </form>
       </div>

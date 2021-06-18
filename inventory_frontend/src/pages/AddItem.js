@@ -1,16 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Divider, Typography } from '@material-ui/core';
-import { addItemToInventory } from '../config/inventoryUtil';
+import { getAllSuppliers } from '../config/supplier.util';
+import { addItemToInventory } from '../config/inventory.util';
 
 const AddItem = ({ hideModal }) => {
   const [name, setName] = useState('');
-  const [supplier, setSupplier] = useState('');
+  const [supplierOptions, setSupplierOptions] = useState([]);
+  const [supplier, setSupplier] = useState(supplierOptions[0] ?? '');
   const [stock, setStock] = useState(0);
   const [warning, setWarning] = useState(0);
   const [price, setPrice] = useState(0.0);
-  const onSubmitHandler = (e) => {
-    addItemToInventory(name, supplier, stock, warning, price);
+
+  const onSubmitHandler = async (e) => {
+    const res = await addItemToInventory(name, supplier, stock, warning, price);
+    hideModal();
   };
+
+  const setVendors = (vendors) => {
+    const vendorsArray = vendors.map((vendor) => {
+      let obj = { name: vendor.name, id: vendor._id };
+      return obj;
+    });
+    setSupplierOptions(vendorsArray);
+  };
+
+  const fetchSuppliersFromAPI = useCallback(async () => {
+    let response = await getAllSuppliers();
+    setVendors(response);
+  }, []);
+
+  useEffect(() => {
+    fetchSuppliersFromAPI();
+  }, [fetchSuppliersFromAPI]);
+
   return (
     <div className="item-modal-container" id="inventory-modal">
       <div className="new-product-header">
@@ -37,11 +59,20 @@ const AddItem = ({ hideModal }) => {
           <div className="label-box">
             <label htmlFor="Supplier">Supplier</label>
           </div>
-          <input
+          <select
             value={supplier}
             placeholder="Supplier name"
-            onChange={(e) => setSupplier(e.target.value)}
-          />
+            onChange={(e) => {
+              setSupplier(e.target.value);
+            }}
+            disabled={supplierOptions.length === 0}
+          >
+            {supplierOptions.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
           <div className="input-45">
             <div style={{ paddingRight: '10%' }}>
               <div className="label-box">
