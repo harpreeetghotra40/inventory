@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
+
+// import styles
+import '../styles/inventory.styles.scss';
 import { Divider, Typography } from '@material-ui/core';
-import { getAllSuppliers } from '../config/supplier.util';
+
+// import API functions
 import { addItemToInventory } from '../config/inventory.util';
 
-const AddItem = ({ hideModal }) => {
+const AddItem = ({ showAndHideModal }) => {
   const [name, setName] = useState('');
   const [supplierOptions, setSupplierOptions] = useState([]);
   const [supplier, setSupplier] = useState(supplierOptions[0] ?? '');
@@ -13,25 +17,8 @@ const AddItem = ({ hideModal }) => {
 
   const onSubmitHandler = async (e) => {
     const res = await addItemToInventory(name, supplier, stock, warning, price);
-    hideModal();
+    showAndHideModal('hidden');
   };
-
-  const setVendors = (vendors) => {
-    const vendorsArray = vendors.map((vendor) => {
-      let obj = { name: vendor.name, id: vendor._id };
-      return obj;
-    });
-    setSupplierOptions(vendorsArray);
-  };
-
-  const fetchSuppliersFromAPI = useCallback(async () => {
-    let response = await getAllSuppliers();
-    setVendors(response);
-  }, []);
-
-  useEffect(() => {
-    fetchSuppliersFromAPI();
-  }, [fetchSuppliersFromAPI]);
 
   return (
     <div className="item-modal-container" id="inventory-modal">
@@ -76,12 +63,12 @@ const AddItem = ({ hideModal }) => {
           <div className="input-45">
             <div style={{ paddingRight: '10%' }}>
               <div className="label-box">
-                <label htmlFor="Stock">In Stock</label>
+                <label htmlFor="Stock">Stock</label>
               </div>
               <input
                 type="number"
                 value={stock}
-                placeholder="Supplier name"
+                placeholder="Items in Stock"
                 onChange={(e) => setStock(e.target.value)}
               />
             </div>
@@ -118,7 +105,7 @@ const AddItem = ({ hideModal }) => {
               setPrice(0);
               setWarning(0);
               setStock(0);
-              hideModal();
+              showAndHideModal('hidden');
             }}
           >
             Cancel

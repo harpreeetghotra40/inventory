@@ -15,7 +15,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import RestaurantMenuIcon from '@material-ui/icons/RestaurantMenu';
 
-const Navbar = ({ history, setActivePage }) => {
+const Navbar = ({ history, setActiveState }) => {
   const drawerWidth = 240;
 
   const useStyles = makeStyles((theme) => ({
@@ -55,11 +55,7 @@ const Navbar = ({ history, setActivePage }) => {
       <div className="navbar-list-container">
         <div className="list-container">
           <List>
-            <ListItem
-              button
-              key="Inventory"
-              onClick={() => setActivePage(<Inventory />)}
-            >
+            <ListItem button key="Inventory" onClick={() => setActiveState(0)}>
               <ListItemIcon>
                 <AppsIcon />
               </ListItemIcon>
@@ -67,11 +63,7 @@ const Navbar = ({ history, setActivePage }) => {
             </ListItem>
           </List>
           <List>
-            <ListItem
-              button
-              key="Suppliers"
-              onClick={() => setActivePage(<Suppliers />)}
-            >
+            <ListItem button key="Suppliers" onClick={() => setActiveState(1)}>
               <ListItemIcon>
                 <LocalShippingIcon />
               </ListItemIcon>
@@ -79,7 +71,7 @@ const Navbar = ({ history, setActivePage }) => {
             </ListItem>
           </List>
           <List>
-            <ListItem button key="Menu" onClick={() => setActivePage(3)}>
+            <ListItem button key="Menu" onClick={() => setActiveState(2)}>
               <ListItemIcon>
                 <RestaurantMenuIcon />
               </ListItemIcon>
@@ -93,7 +85,7 @@ const Navbar = ({ history, setActivePage }) => {
               </ListItemIcon>
               <ListItemText
                 primary="Reports"
-                onClick={() => setActivePage(4)}
+                onClick={() => setActiveState(3)}
               />
             </ListItem>
           </List>

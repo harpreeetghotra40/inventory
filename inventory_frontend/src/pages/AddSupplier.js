@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Divider, Typography } from '@material-ui/core';
 import { addSupplier } from '../config/supplier.util';
 
-const AddSupplier = ({ hideModal, fetchSuppliersFromAPI }) => {
+const AddSupplier = ({ showAndHideModal, updateSuppliers }) => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
@@ -20,9 +20,9 @@ const AddSupplier = ({ hideModal, fetchSuppliersFromAPI }) => {
   const onSubmitHandler = async (e) => {
     const supplier = await addSupplier(name, address, phone, budget, balance);
     if (supplier) {
-      fetchSuppliersFromAPI();
+      updateSuppliers(supplier);
       resetToInitialState();
-      hideModal();
+      showAndHideModal('hidden');
     }
   };
   return (
@@ -95,7 +95,7 @@ const AddSupplier = ({ hideModal, fetchSuppliersFromAPI }) => {
             onClick={(e) => {
               e.preventDefault();
               resetToInitialState();
-              hideModal();
+              showAndHideModal('hidden');
             }}
           >
             Cancel
