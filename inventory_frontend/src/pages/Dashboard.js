@@ -10,13 +10,14 @@ import { getAllSuppliers } from '../config/supplier.util';
 import '../styles/dashboard.styles.scss';
 
 const Dashboard = (props) => {
-  const [activePage, setActivePage] = useState(<Inventory />);
+  // eslint-disable-next-line no-unused-vars
   const [vendors, setVendors] = useState([]);
+  const [activePage, setActivePage] = useState(<Inventory />);
 
   // Setting up NavBar navigation
   const setActiveState = (num) => {
     if (num === 0) {
-      setActivePage(<Inventory vendors={vendors} />);
+      setActivePage(<Inventory />);
     }
     if (num === 1) {
       setActivePage(<Suppliers setVendors={setVendors} />);
@@ -29,9 +30,9 @@ const Dashboard = (props) => {
     setVendors(response);
   });
 
-  // useEffect(() => {
-  //   fetchSuppliersFromAPI();
-  // }, []);
+  useEffect(() => {
+    fetchSuppliersFromAPI();
+  }, []);
 
   return (
     <div>

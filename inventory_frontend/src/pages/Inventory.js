@@ -6,6 +6,7 @@ import ItemTable from './ItemTable';
 
 // import API functions
 import { getAllItems } from '../config/inventory.util';
+import { getAllSuppliers } from '../config/supplier.util';
 
 // import styles
 import { Typography } from '@material-ui/core';
@@ -16,6 +17,7 @@ class Inventory extends React.Component {
     super(props);
     this.state = {
       items: [],
+      vendors: {},
     };
   }
 
@@ -29,11 +31,30 @@ class Inventory extends React.Component {
   async fetchAllItemsFromAPI() {
     let response = await getAllItems();
     this.setState({ items: response });
-    console.log(this.state.items);
   }
+
+  // update items array
+  updateItems = (newItem) => {
+    let newItemArray = this.state.items;
+    newItemArray.push(newItem);
+    this.setState({ items: newItemArray });
+  };
+
+  // fetch all the suppliers form the API
+  fetchSuppliersFromAPI = async () => {
+    let response = await getAllSuppliers();
+
+    // fucntion for getting suppliers from ObjectRef
+    let newSupplierObj = {};
+    for (let i = 0; i < response.length; i++) {
+      newSupplierObj[response[i]._id] = response[i].name;
+    }
+    this.setState({ vendors: newSupplierObj });
+  };
 
   componentDidMount() {
     this.fetchAllItemsFromAPI();
+    this.fetchSuppliersFromAPI();
   }
 
   render() {
@@ -44,24 +65,20 @@ class Inventory extends React.Component {
             <Typography variant="h6" style={{ fontWeight: '500' }}>
               Inventory
             </Typography>
-            <div style={{ marginLeft: '30px' }}>
-              <form
-                id="suppliers-search-input"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <input placeholder="Search" />
-              </form>
-            </div>
           </div>
           <div className="add-supplier">
             <button onClick={() => this.showAndHideModal('visible')}>
               New Item
             </button>
           </div>
-          <AddItem showAndHideModal={this.showAndHideModal} />
+          <AddItem
+            showAndHideModal={this.showAndHideModal}
+            vendors={this.state.vendors}
+            updateItems={this.updateItems}
+          />
         </div>
         <div>
-          <ItemTable />
+          <ItemTable items={this.state.items} suppliers={this.state.vendors} />
         </div>
       </div>
     );

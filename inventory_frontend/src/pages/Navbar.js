@@ -1,6 +1,4 @@
 import React from 'react';
-import Inventory from './Inventory';
-import Suppliers from './Suppliers';
 import { withRouter } from 'react-router';
 import { Drawer } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';

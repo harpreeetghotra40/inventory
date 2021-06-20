@@ -1,0 +1,28 @@
+.item-table-container {
+  min-width: 800px;
+}
+
+.search-input-form {
+  max-width: 300px;
+  padding: 20px 30px;
+}
+
+.item-table {
+  border-collapse: collapse;
+  padding: 15px 20px;
+  .item-row {
+    cursor: pointer;
+    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  }
+  .item-row:hover {
+    background-color: rgba(255, 121, 97, 0.2) !important;
+  }
+  .table-header {
+    text-align: left;
+    padding: 15px 30px;
+  }
+  .table-items {
+    padding: 15px 30px;
+    border-bottom: 1px solid #c9c9c9;
+  }
+}
