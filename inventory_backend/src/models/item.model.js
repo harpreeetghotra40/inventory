@@ -1,4 +1,4 @@
-import { ObjectId, ObjectID } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 // Require Mongoose
 const mongoose = require('mongoose');

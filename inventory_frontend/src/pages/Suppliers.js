@@ -21,7 +21,6 @@ class Suppliers extends React.Component {
 
   //updateSuppliers
   updateSuppliers = (newSupplier) => {
-    console.log(newSupplier);
     let newSupplierList = this.state.suppliers;
     newSupplierList.push(newSupplier);
     this.setState({ suppliers: newSupplierList });

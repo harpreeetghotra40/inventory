@@ -22,6 +22,7 @@ class AddItem extends React.Component {
   }
 
   onSubmitHandler = async (e) => {
+    console.log(this.state.supplier);
     const res = await addItemToInventory(
       this.state.name,
       this.state.supplier,
@@ -37,6 +38,7 @@ class AddItem extends React.Component {
   async fetchSuppliersFromAPI() {
     let response = await getAllSuppliers();
     this.setState({ supplierOptions: response });
+    this.setState({ supplier: response[0]._id });
   }
 
   componentDidMount() {
@@ -56,13 +58,14 @@ class AddItem extends React.Component {
             className="add-item-form"
             onSubmit={(e) => {
               e.preventDefault();
-              this.onSubmitHandler();
+              this.onSubmitHandler(e);
             }}
           >
             <div className="label-box">
               <label htmlFor="Name">Item Name*</label>
             </div>
             <input
+              required
               value={this.state.name}
               placeholder="Item name"
               onChange={(e) => this.setState({ name: e.target.value })}
@@ -71,6 +74,7 @@ class AddItem extends React.Component {
               <label htmlFor="Supplier">Supplier</label>
             </div>
             <select
+              required
               value={this.state.supplier}
               placeholder="Supplier name"
               onChange={(e) => {
@@ -79,7 +83,7 @@ class AddItem extends React.Component {
               disabled={this.state.supplierOptions.length === 0}
             >
               {this.state.supplierOptions.map((item) => (
-                <option key={item.id} value={item._id}>
+                <option key={item._id} value={item._id}>
                   {item.name}
                 </option>
               ))}

@@ -35,8 +35,10 @@ class Inventory extends React.Component {
 
   // update items array
   updateItems = (newItem) => {
+    console.log(newItem);
     let newItemArray = this.state.items;
     newItemArray.push(newItem);
+    console.log(newItemArray);
     this.setState({ items: newItemArray });
   };
 

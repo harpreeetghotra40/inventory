@@ -1,18 +1,14 @@
 import React from 'react';
 import '../styles/supplier.styles.scss';
 import { Divider } from '@material-ui/core';
-import MadPenguinLogo from '../images/mad-penguin-logo.jpg';
+import RusticFarms from '../images/rustic-farms-logo.png';
 
 const Card = ({ supplier }) => {
   return (
     <div className="card content-border" key={supplier.key}>
       <div className="upper-deck">
         <div className="card-image-container">
-          <img
-            src={MadPenguinLogo}
-            alt="Mad Penguin Coffee"
-            className="card-image"
-          />
+          <img src={RusticFarms} alt={supplier.name} className="card-image" />
         </div>
         <div className="supplier-info-upper">
           <h4>{supplier.name}</h4>
@@ -43,7 +39,8 @@ const Card = ({ supplier }) => {
           </span>
         </div>
         <div className="order-btn-div">
-          <button>Order</button>
+          <div className="button-div">Order</div>
+          <div className="button-div update">Update</div>
         </div>
       </div>
     </div>

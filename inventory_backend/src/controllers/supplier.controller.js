@@ -20,6 +20,7 @@ export const addSupplier = async (req, res) => {
   try {
     const supplier = await Supplier.create({
       name: req.body.name,
+      createrRef: req.user._id ?? null,
       address: req.body.address ?? 'unknown',
       phone: req.body.phone ?? 'unknown',
       budget: req.body.budget ?? 0,
